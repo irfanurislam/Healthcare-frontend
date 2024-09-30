@@ -1,7 +1,10 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-
+import facebookIcon from "@/assets/landing_page/facebook.png";
+import instagramIcon from "@/assets/landing_page/instagram.png";
+import twitterIcon from "@/assets/landing_page/twitter.png";
+import linkedIcon from "@/assets/landing_page/linkedin.png";
 import React from "react";
 
 const Footer = () => {
@@ -17,11 +20,11 @@ const Footer = () => {
           <Typography color="#fff">Diagonistics</Typography>
           <Typography color="#fff">NGOs</Typography>
         </Stack>
-        <Stack direction="row" justifyContent="center" gap={3}>
-          <Image src={""} width={30} height={30} alt="faebok" />
-          <Image src={""} width={30} height={30} alt="faebok" />
-          <Image src={""} width={30} height={30} alt="faebok" />
-          <Image src={""} width={30} height={30} alt="faebok" />
+        <Stack direction="row" gap={2} justifyContent="center" py={3}>
+          <Image src={facebookIcon} width={30} height={30} alt="facebook" />
+          <Image src={instagramIcon} width={30} height={30} alt="facebook" />
+          <Image src={twitterIcon} width={30} height={30} alt="facebook" />
+          <Image src={linkedIcon} width={30} height={30} alt="facebook" />
         </Stack>
         <div className="border-b-[1px] border-dashed"></div>
         <Stack
