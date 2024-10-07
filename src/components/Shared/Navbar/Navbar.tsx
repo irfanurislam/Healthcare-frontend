@@ -1,17 +1,23 @@
 import { getUserInfo, removeUser } from "@/services/auth.services";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import React from "react";
 
 const Navbar = () => {
-  const userInfo = getUserInfo();
-  const router = useRouter();
-  const handleLogOut = () => {
-    removeUser();
-    router.refresh();
-  };
+  // const userInfo = getUserInfo();
+  // const router = useRouter();
+  // const handleLogOut = () => {
+  //   removeUser();
+  //   router.refresh();
+  // };
+
+  const AuthButton = dynamic(
+    () => import("@/components/UI/AuthButton/AuthButton"),
+    { ssr: false }
+  );
   return (
     <Container>
       <Stack
@@ -34,7 +40,7 @@ const Navbar = () => {
           <Typography>Diagonistics</Typography>
           <Typography>NGOs</Typography>
         </Stack>
-        {userInfo?.userId ? (
+        {/* {userInfo?.userId ? (
           <Button onClick={handleLogOut} color="error">
             LogOut
           </Button>
@@ -42,7 +48,8 @@ const Navbar = () => {
           <Button component={Link} href="/login">
             Login
           </Button>
-        )}
+        )} */}
+        <AuthButton />
       </Stack>
     </Container>
   );
