@@ -16,6 +16,8 @@ import { modifyPayload } from "@/utils/modifyPayload";
 import { registerPatient } from "@/services/actions/registerPatient";
 import { toast } from "sonner";
 import { Router, useRouter } from "next/router";
+import { storeUserInfo } from "@/services/auth.services";
+import { userLogin } from "@/services/actions/userLogin";
 
 interface IPatientData {
   name: string;
@@ -34,7 +36,7 @@ const RegisterPage = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<IPatientRegisterFormData>();
   const onSubmit: SubmitHandler<IPatientRegisterFormData> = async (values) => {
     const data = modifyPayload(values);
     console.log(data);
@@ -42,8 +44,15 @@ const RegisterPage = () => {
       const res = await registerPatient(data);
 
       if (res?.data?.id) {
-        toast.success(res.message);
-        router?.push("/login");
+        toast.success(res?.message);
+        const result = await userLogin({
+          password: values.password,
+          email: values.patient.email,
+        });
+        if (result?.data?.accessToken) {
+          storeUserInfo({ accessToken: result?.data?.accessToken });
+          router.push("/");
+        }
       }
     } catch (err: any) {
       console.log(err.message);
@@ -90,7 +99,7 @@ const RegisterPage = () => {
             </Box>
           </Stack>
           <Box>
-            <form>
+            <form onSubmit={handleRegister}>
               <Grid Container spacing={2}>
                 <Grid item md={12}>
                   <TextField
