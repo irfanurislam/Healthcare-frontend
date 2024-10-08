@@ -6,6 +6,10 @@ import Link from "next/link";
 import { storeUserInfo } from "@/services/auth.services";
 import { toast } from "sonner";
 import { userLogin } from "@/services/actions/userLogin";
+import { FieldValues } from "react-hook-form";
+import PHForm from "@/components/Forms/PHForm";
+import Image from "next/image";
+
 const LoginPage = () => {
   const [error, setError] = useState("");
   const handleLogin = async (values: FieldValues) => {
@@ -50,7 +54,12 @@ const LoginPage = () => {
             }}
           >
             <Box>
-              <Image src={assets.svgs.logo} width={50} height={50} alt="logo" />
+              <Image
+                src={assets?.svgs.logo}
+                width={50}
+                height={50}
+                alt="logo"
+              />
             </Box>
             <Box>
               <Typography variant="h6" fontWeight={600}>
@@ -76,14 +85,7 @@ const LoginPage = () => {
           )}
 
           <Box>
-            <PHForm
-              onSubmit={handleLogin}
-              resolver={zodResolver(validationSchema)}
-              defaultValues={{
-                email: "",
-                password: "",
-              }}
-            >
+            <PHForm onSubmit={handleLogin}>
               <Grid container spacing={2} my={1}>
                 <Grid item md={6}>
                   <PHInput
