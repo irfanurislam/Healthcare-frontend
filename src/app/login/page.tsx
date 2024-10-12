@@ -9,9 +9,17 @@ import { userLogin } from "@/services/actions/userLogin";
 import { FieldValues } from "react-hook-form";
 import PHForm from "@/components/Forms/PHForm";
 import Image from "next/image";
+import PHInput from "@/components/Forms/PHInput";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
+export const validationSchema = z.object({
+  email: z.string().email("Please enter a valid email address!"),
+  password: z.string().min(6, "Must be at least 6 characters"),
+});
 const LoginPage = () => {
   const [error, setError] = useState("");
+
   const handleLogin = async (values: FieldValues) => {
     // console.log(values);
     try {
@@ -85,7 +93,14 @@ const LoginPage = () => {
           )}
 
           <Box>
-            <PHForm onSubmit={handleLogin}>
+            <PHForm
+              onSubmit={handleLogin}
+              resolver={zodResolver(validationSchema)}
+              defaultValues={{
+                email: "",
+                password: "",
+              }}
+            >
               <Grid container spacing={2} my={1}>
                 <Grid item md={6}>
                   <PHInput
